@@ -91,7 +91,7 @@ export default function PlaceOrderScreen({ history }) {
                           <Row>
                             <Col md={2}>
                               <Image
-                                src={`http://localhost:5000/${item.image}`}
+                                src={`https://vegshop1.herokuapp.com/${item.image}`}
                                 alt={item.name}
                                 fluid
                                 rounded

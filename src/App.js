@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import Footer from "./components/Footer";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
 import Header from "./components/Header";
@@ -41,7 +40,6 @@ export default function App() {
           </Switch>
         </Container>
       </main>
-      <Footer />
     </Router>
   );
 }

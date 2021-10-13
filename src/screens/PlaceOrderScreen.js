@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, ListGroup, Row, Image, Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Message from "../components/Message";
+import StripeCheckout from "react-stripe-checkout";
 
 import { createOrder } from "../actions/orderActions";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+import { baseUrl, imageUrl } from "../util/util";
+import axios from "axios";
+
+const key = process.env.REACT_APP_STRIPE;
 
 export default function PlaceOrderScreen({ history }) {
   const dispatch = useDispatch();
@@ -43,7 +48,7 @@ export default function PlaceOrderScreen({ history }) {
     }
   }, [history, success, dispatch]);
 
-  const placeOrderHandler = () => {
+  const placeOrderHandler = (stripeToken) => {
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
@@ -53,8 +58,13 @@ export default function PlaceOrderScreen({ history }) {
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
         orderTotal: cart.orderTotal,
+        tokenId: stripeToken,
       })
     );
+  };
+
+  const onToken = (token) => {
+    placeOrderHandler(token.id);
   };
 
   return (
@@ -91,8 +101,9 @@ export default function PlaceOrderScreen({ history }) {
                           <Row>
                             <Col md={2}>
                               <Image
-                                src={`https://vegshop1.herokuapp.com/${item.image}`}
+                                // src={`https://vegshop1.herokuapp.com/${item.image}`}
                                 alt={item.name}
+                                src={`${imageUrl}${item.image}`}
                                 fluid
                                 rounded
                               />
@@ -148,14 +159,24 @@ export default function PlaceOrderScreen({ history }) {
                   </ListGroup.Item>
 
                   <ListGroup.Item>
-                    <Button
-                      type="button"
-                      className="btn-block"
+                    <StripeCheckout
+                      name="VegShop" // the pop-in header title
+                      description="Order fresh vegetables and fruits" // the pop-in header subtitle
+                      amount={cart.orderTotal * 100} // cents
+                      currency="INR"
+                      // stripeKey={key}
+                      stripeKey="pk_test_51JQ9mISDluWntsjurQawUiReuX0Nms3zYfjeG7A5riCIjE9Oys0UKCyDmKG4r08zyDalhh30pRyZm4NC1X9jTKuh00RafV4U6n"
+                      token={onToken}
                       disabled={cart.cartItems.length === 0}
-                      onClick={placeOrderHandler}
                     >
-                      Place Order
-                    </Button>
+                      <Button
+                        type="button"
+                        className="btn-block"
+                        disabled={cart.cartItems.length === 0}
+                      >
+                        Place Order
+                      </Button>
+                    </StripeCheckout>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../actions/cartActions";
+import { imageUrl } from "../util/util";
 
 export default function Product({ product }) {
   const [isAdded, setIsAdded] = useState(false);
@@ -17,7 +18,8 @@ export default function Product({ product }) {
   return (
     <Card className="my-3 p-3 rounded text-center shadow">
       <Card.Img
-        src={`https://vegshop1.herokuapp.com/${product.image}`}
+        // src={`https://vegshop1.herokuapp.com/${product.image}`}
+        src={`${imageUrl}${product.image}`}
         alt={product.name}
         variant="top"
         className="img-fluid h-45"

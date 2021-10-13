@@ -24,8 +24,6 @@ export const userSignup = (name, email, password) => async (dispatch) => {
       password,
     });
 
-    console.log(JSON.stringify(data));
-
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,

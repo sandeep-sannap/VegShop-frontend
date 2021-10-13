@@ -13,7 +13,15 @@ export default function Header() {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   return (
-    <Navbar bg="primary" expand="lg">
+    <Navbar
+      bg="primary"
+      expand="lg"
+      style={{
+        position: "sticky",
+        top: "0",
+        zIndex: "1",
+      }}
+    >
       <Container>
         <Navbar.Brand>
           <NavLink

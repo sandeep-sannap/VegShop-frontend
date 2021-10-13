@@ -7,6 +7,7 @@ import {
 } from "../actions/cartActions";
 
 import { Row, Col, ListGroup, Image, Button } from "react-bootstrap";
+import { imageUrl } from "../util/util";
 
 export default function CartItem(props) {
   const { _id, price, image, quantity, name } = props.item;
@@ -28,7 +29,7 @@ export default function CartItem(props) {
     <ListGroup.Item>
       <Row className="justify-content-center align-items-center">
         <Col md={2}>
-          <Image src={image} alt={name} fluid rounded />
+          <Image src={`${imageUrl}${image}`} alt={name} fluid rounded />
         </Col>
         <Col md={2} className="text-center my-2">
           <h5>{name}</h5>

@@ -33,9 +33,9 @@ export default function ProductListScreen({ history }) {
     dispatch(listProducts());
   }, [dispatch, userInfo, history, successDelete]);
 
-  const deleteHandler = (_id) => {
+  const deleteHandler = (product) => {
     if (window.confirm("Are You Sure")) {
-      dispatch(deleteProduct(_id));
+      dispatch(deleteProduct(product));
     }
   };
 
@@ -90,7 +90,7 @@ export default function ProductListScreen({ history }) {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      onClick={() => deleteHandler(product._id)}
+                      onClick={() => deleteHandler(product)}
                     >
                       <i className="fas fa-trash"></i>
                     </Button>

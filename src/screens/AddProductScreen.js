@@ -36,6 +36,9 @@ export default function AddProductScreen({ history }) {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (!photo || !name || !price) {
+      return;
+    }
     postDetail();
   };
 

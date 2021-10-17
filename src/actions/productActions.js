@@ -75,7 +75,9 @@ export const createProduct =
     }
   };
 
-export const deleteProduct = (_id) => async (dispatch, getState) => {
+export const deleteProduct = (product) => async (dispatch, getState) => {
+  console.log(product.name);
+  console.log(product._id);
   try {
     dispatch({
       type: PRODUCT_DELETE_REQUEST,
@@ -85,15 +87,19 @@ export const deleteProduct = (_id) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
-    await axios.delete(`${baseUrl}product/delete-product/${_id}`, {
-      headers: {
-        Authorization: "Bearer " + userInfo.token,
-      },
-    });
+    await axios.delete(
+      `${baseUrl}product/delete-product/${product._id}`,
+
+      {
+        headers: {
+          Authorization: "Bearer " + userInfo.token,
+        },
+      }
+    );
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
-      paylaod: _id,
+      paylaod: product._id,
     });
   } catch (error) {
     dispatch({

@@ -1,45 +1,42 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import { createProduct } from "../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
-import { baseUrl } from "../util/util";
 
 export default function AddProductScreen({ history }) {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-
   const [photo, setPhoto] = useState("");
 
   const { loading, error, success } = useSelector(
     (state) => state.productCreate
   );
+
+  const postDetail = () => {
+    const data = new FormData();
+    data.append("file", photo);
+    data.append("upload_preset", "shopveg");
+    console.log("data ", data);
+    fetch("https://api.cloudinary.com/v1_1/shree50/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.secure_url);
+        dispatch(createProduct(name, price, data.secure_url));
+      })
+      .catch((err) => console.log(err));
+  };
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("image", photo);
-
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const { data } = await axios.post(`${baseUrl}uploads`, formData, config);
-
-      dispatch(createProduct(name, price, data));
-    } catch (error) {
-      console.log(error);
-    }
+    postDetail();
   };
 
   useEffect(() => {
@@ -90,7 +87,7 @@ export default function AddProductScreen({ history }) {
               <Form.Label>Product Image</Form.Label>
               <Form.File
                 type="file"
-                name="image"
+                name="file"
                 onChange={(e) => {
                   console.log(e.target.files);
                   setPhoto(e.target.files[0]);

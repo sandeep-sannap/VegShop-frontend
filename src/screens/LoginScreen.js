@@ -8,13 +8,26 @@ import FormContainer from "../components/FormContainer";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { userSignin } from "../actions/userActions";
+import { useFormik } from "formik";
 
 //validation starts
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = "Email address required.";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = "Invalid email address";
+  }
+
+  if (!values.password) {
+    errors.password = "Password required.";
+  }
+
+  return errors;
+};
 
 export default function LoginScreen({ location, history }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -28,10 +41,19 @@ export default function LoginScreen({ location, history }) {
     }
   }, [history, userInfo, redirect]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(userSignin(email, password));
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+
+      password: "",
+    },
+
+    validate,
+
+    onSubmit: (values) => {
+      dispatch(userSignin(values.email, values.password));
+    },
+  });
 
   return (
     <section className="mt-5 auth">
@@ -39,26 +61,38 @@ export default function LoginScreen({ location, history }) {
         <h1>Sign In</h1>
         {error && <Message variant="danger">{error}</Message>}
         {loading && <Loader />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId="email">
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group>
             <Form.Label>Email Address</Form.Label>
             <Form.Control
               type="email"
+              id="email"
+              name="email"
               placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
             ></Form.Control>
           </Form.Group>
+          {formik.touched.email && formik.errors.email ? (
+            <div style={{ color: "red" }}>{formik.errors.email}</div>
+          ) : null}
 
-          <Form.Group controlId="password">
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
+              id="password"
+              name="password"
               placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             ></Form.Control>
           </Form.Group>
+          {formik.touched.password && formik.errors.password ? (
+            <div style={{ color: "red" }}>{formik.errors.password}</div>
+          ) : null}
 
           <Button type="submit" variant="primary" className="my-3">
             Sign In

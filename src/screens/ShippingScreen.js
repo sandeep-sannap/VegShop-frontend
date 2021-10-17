@@ -83,7 +83,7 @@ export default function ShippingScreen({ history }) {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label as="legend">Select Method</Form.Label>
+            <Form.Label as="legend">Payment Method</Form.Label>
             <Col>
               <Form.Check
                 checked="true"

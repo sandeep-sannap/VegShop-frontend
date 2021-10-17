@@ -18,7 +18,6 @@ export default function ProductListScreen({ history }) {
     error: errorDelete,
     success: successDelete,
   } = useSelector((state) => state.productDelete);
-  // console.log(loadingDelete, errorDelete, successDelete);
 
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -53,10 +52,7 @@ export default function ProductListScreen({ history }) {
         </Col>
         <Col className="text-right">
           <Link to="/admin/addproduct">
-            <Button
-              className="my-3"
-              //   onClick={createProductHandler}
-            >
+            <Button className="my-3">
               {" "}
               <i className="fas fa-plus"></i>Create Product
             </Button>
@@ -66,8 +62,6 @@ export default function ProductListScreen({ history }) {
 
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-      {/* {loadingCreate && <Loader />}
-      {errorCreate && <Message variant="danger">{errorCreate}</Message>} */}
 
       {loading ? (
         <Loader />
@@ -105,7 +99,6 @@ export default function ProductListScreen({ history }) {
               ))}
             </tbody>
           </Table>
-          {/* <Paginate pages={pages} page={page} isAdmin={true} /> */}
         </>
       )}
     </section>

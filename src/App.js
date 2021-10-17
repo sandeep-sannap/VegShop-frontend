@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
-import Header from "./components/Header";
+// import Header from "./components/Header";
+import NavBar from "./components/navbar/NavBar";
 import HomeScreen from "./screens/HomeScreen";
 
 import CartScreen from "./screens/CartScreen";
@@ -20,7 +21,7 @@ import MyOrderListScreen from "./screens/MyOrderListScreen";
 export default function App() {
   return (
     <Router>
-      <Header />
+      <NavBar />
 
       <main className="py-3">
         <Container>

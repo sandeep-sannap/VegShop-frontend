@@ -7,8 +7,6 @@ import StripeCheckout from "react-stripe-checkout";
 
 import { createOrder } from "../actions/orderActions";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
-import { baseUrl, imageUrl } from "../util/util";
-import axios from "axios";
 
 const key = process.env.REACT_APP_STRIPE;
 
@@ -101,9 +99,8 @@ export default function PlaceOrderScreen({ history }) {
                           <Row>
                             <Col md={2}>
                               <Image
-                                // src={`https://vegshop1.herokuapp.com/${item.image}`}
                                 alt={item.name}
-                                src={`${imageUrl}${item.image}`}
+                                src={item.image}
                                 fluid
                                 rounded
                               />
@@ -164,7 +161,6 @@ export default function PlaceOrderScreen({ history }) {
                       description="Order fresh vegetables and fruits" // the pop-in header subtitle
                       amount={cart.orderTotal * 100} // cents
                       currency="INR"
-                      // stripeKey={key}
                       stripeKey="pk_test_51JQ9mISDluWntsjurQawUiReuX0Nms3zYfjeG7A5riCIjE9Oys0UKCyDmKG4r08zyDalhh30pRyZm4NC1X9jTKuh00RafV4U6n"
                       token={onToken}
                       disabled={cart.cartItems.length === 0}

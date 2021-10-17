@@ -19,7 +19,8 @@ export default function Product({ product }) {
     <Card className="my-3 p-3 rounded text-center shadow">
       <Card.Img
         // src={`https://vegshop1.herokuapp.com/${product.image}`}
-        src={`${imageUrl}${product.image}`}
+        // src={`${imageUrl}${product.image}`}
+        src={product.image}
         alt={product.name}
         variant="top"
         className="img-fluid h-45"

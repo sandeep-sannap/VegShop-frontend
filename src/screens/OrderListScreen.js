@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Table, Toast, ToastContainer } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { listOrders } from "../actions/orderActions";
 
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-import io from "socket.io-client";
-import { updateOrders } from "../actions/orderActions";
 import Order from "../components/Order";
 
 export default function OrderListScreen({ history }) {

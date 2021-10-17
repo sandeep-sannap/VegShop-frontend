@@ -81,7 +81,7 @@ export default function RegisterScreen({ location, history }) {
       {loading && <Loader />}
 
       <Form onSubmit={formik.handleSubmit}>
-        <Form.Group controlId="name">
+        <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="name"
@@ -93,11 +93,11 @@ export default function RegisterScreen({ location, history }) {
             value={formik.values.name}
           ></Form.Control>
           {formik.touched.name && formik.errors.name ? (
-            <div>{formik.errors.name}</div>
+            <div style={{ color: "red" }}>{formik.errors.name}</div>
           ) : null}
         </Form.Group>
 
-        <Form.Group controlId="email">
+        <Form.Group>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
@@ -110,10 +110,10 @@ export default function RegisterScreen({ location, history }) {
           ></Form.Control>
         </Form.Group>
         {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
+          <div style={{ color: "red" }}>{formik.errors.email}</div>
         ) : null}
 
-        <Form.Group controlId="password">
+        <Form.Group>
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -126,7 +126,7 @@ export default function RegisterScreen({ location, history }) {
           ></Form.Control>
         </Form.Group>
         {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
+          <div style={{ color: "red" }}>{formik.errors.password}</div>
         ) : null}
 
         <Button type="submit" variant="primary" className="my-3">
